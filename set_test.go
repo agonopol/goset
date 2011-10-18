@@ -1,4 +1,4 @@
-package goset
+package set
 
 import "testing"
 import "json"
