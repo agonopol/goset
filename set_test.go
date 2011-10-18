@@ -13,7 +13,7 @@ func compare(t *testing.T, expected, actual interface{}) {
 }
 
 func TestSetAddRemoveContains(t *testing.T) {
-	set := NewSet()
+	set := New()
 	set.Add(10)
 	compare(t, true, set.Has(10))
 	set.Remove(10)
@@ -23,7 +23,7 @@ func TestSetAddRemoveContains(t *testing.T) {
 }
 
 func TestSetMarshalAndUnMarshal(t *testing.T) {
-	set := NewSet()
+	set := New()
 	set.Add("hello")
 	set.Add("there")
 	set.Add("you")
@@ -34,7 +34,7 @@ func TestSetMarshalAndUnMarshal(t *testing.T) {
 		panic(err)
 	}
 	compare(t, "[\"hello\",\"there\",\"shie\",\"you\"]", string(marshaled))
-	unmarshaled := NewSet()
+	unmarshaled := New()
 	err = json.Unmarshal(marshaled, unmarshaled)
 	compare(t, true, unmarshaled.Has("shie"))
 

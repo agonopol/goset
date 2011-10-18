@@ -7,7 +7,7 @@ type Set struct {
 	set map[interface{}]bool
 }
 
-func NewSet() *Set {
+func New() *Set {
 	return &Set{make(map[interface{}]bool)}
 }
 
