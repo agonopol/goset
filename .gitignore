@@ -1,0 +1,7 @@
+out/
+*.6
+_obj
+*.erf
+_test/*
+_testmain.go
+*.out
