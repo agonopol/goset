@@ -3,36 +3,33 @@ package set
 import "json"
 import "os"
 
-type Set struct {
-	set map[interface{}]bool
-}
+type Set map[interface{}]bool
 
 func New() *Set {
-	return &Set{make(map[interface{}]bool)}
+	set := make(Set)
+	return &set
 }
 
 func (this *Set) Add(x interface{}) {
-	this.set[x] = true
+	(*this)[x] = true
 }
 
 func (this *Set) Remove(x interface{}) {
-	this.set[x] = false, false
+	(*this)[x] = false, false
 }
 
 func (this *Set) Reset() {
-	this.set = make(map[interface{}]bool)
+	(*this) = make(map[interface{}]bool)
 }
 
 func (this *Set) Has(x interface{}) bool {
-	if _, found := this.set[x]; found {
-		return true
-	}
-	return false
+	_, found := (*this)[x]
+	return found
 }
 
 func (this *Set) MarshalJSON() ([]byte, os.Error) {
 	set := make([]interface{}, 0)
-	for k, _ := range this.set {
+	for k, _ := range *this {
 		set = append(set, k)
 	}
 	return json.Marshal(set)
