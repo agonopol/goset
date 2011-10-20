@@ -37,11 +37,10 @@ func (this *Set) Len() int {
 	return len(*this)
 }
 
-func (this *Set) Map(f func(interface{}) interface{}) []interface{} {
-	set := make([]interface{}, len(*this))
-	i := 0
+func (this *Set) Map(f func(interface{}) interface{}) *Set {
+	set := New()
 	for k,_ := range *this {
-		set[i] = f(k)
+		set.Add(f(k))
 	}
 	return set
 }

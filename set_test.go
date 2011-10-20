@@ -22,6 +22,19 @@ func TestSetAddRemoveContains(t *testing.T) {
 
 }
 
+func TestSetMap(t *testing.T) {
+	set := New()
+	set.Add(10)
+	set.Add(12)
+	set.Add(14)
+	compare(t, true, set.Has(10))
+	compare(t, false, set.Has(11))
+	set = set.Map(func(x interface{}) interface{} {return x.(int) + 1})
+	compare(t, false, set.Has(10))
+	compare(t, true, set.Has(11))
+
+}
+
 func TestSetMarshalAndUnMarshal(t *testing.T) {
 	set := New()
 	set.Add("hello")
