@@ -1,9 +1,8 @@
 package set
 
 import "testing"
-import "json"
+import "encoding/json"
 import "fmt"
-
 
 func compare(t *testing.T, expected, actual interface{}) {
 	if expected != actual {
@@ -29,7 +28,7 @@ func TestSetMap(t *testing.T) {
 	set.Add(14)
 	compare(t, true, set.Has(10))
 	compare(t, false, set.Has(11))
-	set = set.Map(func(x interface{}) interface{} {return x.(int) + 1})
+	set = set.Map(func(x interface{}) interface{} { return x.(int) + 1 })
 	compare(t, false, set.Has(10))
 	compare(t, true, set.Has(11))
 

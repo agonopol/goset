@@ -1,7 +1,6 @@
 package set
 
-import "json"
-import "os"
+import "encoding/json"
 
 type Set map[interface{}]bool
 
@@ -15,7 +14,7 @@ func (this *Set) Add(x interface{}) {
 }
 
 func (this *Set) Remove(x interface{}) {
-	(*this)[x] = false, false
+	delete((*this), x)
 }
 
 func (this *Set) Reset() {
@@ -27,8 +26,8 @@ func (this *Set) Has(x interface{}) bool {
 	return found
 }
 
-func (this *Set) Do(f func (interface{})) {
-	for k,_ := range *this {
+func (this *Set) Do(f func(interface{})) {
+	for k, _ := range *this {
 		f(k)
 	}
 }
@@ -39,13 +38,13 @@ func (this *Set) Len() int {
 
 func (this *Set) Map(f func(interface{}) interface{}) *Set {
 	set := New()
-	for k,_ := range *this {
+	for k, _ := range *this {
 		set.Add(f(k))
 	}
 	return set
 }
 
-func (this *Set) MarshalJSON() ([]byte, os.Error) {
+func (this *Set) MarshalJSON() ([]byte, error) {
 	set := make([]interface{}, 0)
 	for k, _ := range *this {
 		set = append(set, k)
@@ -53,7 +52,7 @@ func (this *Set) MarshalJSON() ([]byte, os.Error) {
 	return json.Marshal(set)
 }
 
-func (this *Set) UnmarshalJSON(body []byte) os.Error {
+func (this *Set) UnmarshalJSON(body []byte) error {
 	var set []interface{}
 	err := json.Unmarshal(body, &set)
 	if err != nil {
